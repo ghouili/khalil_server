@@ -9,6 +9,8 @@ const server = express();
 server.use(express.json());
 
 server.use("/user", UserRourtes);
+server.use("/produit", UserRourtes);
+server.use("/produit", UserRourtes);
 
 mongoose
   .connect("mongodb+srv://admin:admin@cluster0.1irjm.mongodb.net/")

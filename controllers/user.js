@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const AddUser = async (req, res) => {
   const { email, name, age, password } = req.body;
 
+  // console.log(req.file)
   let existUser;
   try {
     existUser = await user.findOne({ email: email });
@@ -20,11 +21,16 @@ const AddUser = async (req, res) => {
       .status(200)
       .json({ sucess: false, message: "email alreay exist", data: null });
   }
+  let pic = "avatar.png";
+  if (req.file) {
+    pic = req.file.filename;
+  }
   let hashedPassword = await bcrypt.hash(password, 10);
   const NewUser = new user({
     email,
     name,
     age,
+    pic,
     password: hashedPassword,
   });
 
@@ -41,6 +47,9 @@ const AddUser = async (req, res) => {
   return res
     .status(201)
     .json({ sucess: true, message: "user added successfully", data: NewUser });
+  // return res
+  //   .status(201)
+  //   .json({ sucess: true, message: "user added successfully", data: req.file });
 };
 
 const FindUserById = async (req, res) => {
@@ -122,9 +131,11 @@ const UpdateUser = async (req, res) => {
     });
   }
 
-  return res
-    .status(201)
-    .json({ sucess: true, message: "user updatd successfully", data: existUser });
+  return res.status(201).json({
+    sucess: true,
+    message: "user updatd successfully",
+    data: existUser,
+  });
 };
 
 const DeleteUser = async (req, res) => {
@@ -165,27 +176,18 @@ const DeleteUser = async (req, res) => {
 
 const login = async (req, res) => {
   // get data
-
   // check email in db
-
   // compare password
-
   // res
+};
 
-}
-
-const register  = async (req, res) => {
+const register = async (req, res) => {
   // get data
-
   // check email in db
-
   // hash password
-
-  // save user 
-
+  // save user
   // res
-
-}
+};
 
 const Hello = (req, res) => {
   const { name } = req.params;
