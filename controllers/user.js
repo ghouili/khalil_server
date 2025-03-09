@@ -1,10 +1,11 @@
 const user = require("../models/user");
 const bcrypt = require("bcryptjs");
+var generator = require("generate-password");
 
 const AddUser = async (req, res) => {
-  const { email, name, age, password } = req.body;
+  const { email, name, age } = req.body;
 
-  // console.log(req.file)
+  console.log(req.body);
   let existUser;
   try {
     existUser = await user.findOne({ email: email });
@@ -25,6 +26,16 @@ const AddUser = async (req, res) => {
   if (req.file) {
     pic = req.file.filename;
   }
+  let password;
+  if (!req.body.password) {
+    password = generator.generate({
+      length: 8,
+      numbers: true,
+    });
+  } else {
+    password = req.body.password;
+  }
+  console.log(password);
   let hashedPassword = await bcrypt.hash(password, 10);
   const NewUser = new user({
     email,
