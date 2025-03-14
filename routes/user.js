@@ -12,7 +12,7 @@ route.get("/", UserController.AllUser);
 
 route.post("/add", fileUploader.single("pic"), UserController.AddUser);
 
-route.put("/:id", UserController.UpdateUser);
+route.put("/:id", fileUploader.single("pic"), UserController.UpdateUser);
 
 route.delete("/:id", UserController.DeleteUser);
 

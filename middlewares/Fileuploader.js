@@ -14,10 +14,11 @@ const fileUploader = multer({
       cb(null, "uploads/images");
     },
     filename: (req, file, cb) => {
+      
       const ext = mime_type_map[file.mimetype];
       cb(null, uuid() + "." + ext);
     },
   }),
 });
 
-module.exports = fileUploader
+module.exports = fileUploader;
